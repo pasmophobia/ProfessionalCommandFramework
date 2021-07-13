@@ -5,7 +5,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType
 import net.propromp.professionalcommandframework.api.arguments.Argument
 import net.propromp.professionalcommandframework.api.arguments.IntegerArgument
 
-class ArgumentInteger(private val annotation:IntegerArgument): Argument(annotation) {
+class ArgumentInteger(private val annotation:IntegerArgument): Argument() {
     override fun getBrigadierArgument(): ArgumentType<*> {
         return IntegerArgumentType.integer(annotation.min,annotation.max)
     }

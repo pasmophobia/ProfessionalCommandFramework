@@ -9,7 +9,7 @@ import net.minecraft.server.v1_16_R3.CommandListenerWrapper
 import org.bukkit.command.CommandSender
 import java.util.concurrent.CompletableFuture
 
-abstract class CustomArgument<T>(annotation: Annotation):Argument(annotation) {
+abstract class CustomArgument<T>(annotation: Annotation):Argument() {
     override fun getBrigadierArgument(): ArgumentType<T> {
         return object:ArgumentType<T>{
             override fun parse(p0: StringReader): T {

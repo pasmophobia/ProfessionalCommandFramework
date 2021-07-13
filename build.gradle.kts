@@ -36,10 +36,12 @@ tasks {
         sourceCompatibility = "1.8"
         targetCompatibility = "1.8"
         options.encoding = "UTF-8"
+        options.compilerArgs.add("-parameters")
     }
 
     compileKotlin {
         kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.javaParameters = true
     }
 
     javadoc {

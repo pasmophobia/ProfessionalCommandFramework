@@ -15,6 +15,12 @@ import net.propromp.professionalcommandframework.arguments.ArgumentInteger
 import org.bukkit.command.CommandSender
 import java.lang.reflect.*
 
+/**
+ * Annotation manager
+ *
+ * @property manager
+ * @constructor Create empty Annotation manager
+ */
 class AnnotationManager(val manager: CommandManager) {
     private val argumentMap = mutableMapOf<Class<out Annotation>, Class<out Argument>>()
 
@@ -22,10 +28,21 @@ class AnnotationManager(val manager: CommandManager) {
         registerArgument(IntegerArgument::class.java, ArgumentInteger::class.java)
     }
 
+    /**
+     * Register argument
+     *
+     * @param annotationClass annotation class
+     * @param argumentClass argument class
+     */
     fun registerArgument(annotationClass: Class<out Annotation>, argumentClass: Class<out Argument>) {
         argumentMap[annotationClass] = argumentClass
     }
 
+    /**
+     * Register a command
+     *
+     * @param root class
+     */
     fun register(root: Class<*>) {
         root.annotations.forEach { annotation ->
             when (annotation) {
@@ -46,38 +63,35 @@ class AnnotationManager(val manager: CommandManager) {
             }
         }
         if (name != null) {
-            var literal = LiteralArgumentBuilder.literal<CommandListenerWrapper>(name)
+            var root = LiteralArgumentBuilder.literal<CommandListenerWrapper>(name)
             clazz.methods.forEach { method ->
-                var root = false
+                var hasRootAnnotation = false
                 var absoluteSender = false
                 method.annotations.forEach { annotation ->
                     when (annotation) {
                         is CommandName -> {
-                            literal = literal.then(getLiteral(method))
+                            root = root.then(getLiteral(method))
                         }
                         is Root -> {
-                            root = true
+                            hasRootAnnotation = true
                         }
                         is AbsoluteSender -> {
                             absoluteSender = true
                         }
                     }
                 }
-                if(root) {
-                    literal = literal.executes(getCommand(method, absoluteSender))
+                if (hasRootAnnotation) {
+                    root = root.executes(getCommand(method, absoluteSender))
                 }
             }
-            clazz.classes.filter { method ->
-                method.annotations.forEach { annotation ->
-                    if (annotation.javaClass == CommandName::class.java) {
-                        true
+            clazz.classes.forEach { childClass ->
+                childClass.annotations.forEach { annotation ->
+                    if (annotation is CommandName) {
+                        root = root.then(getLiteral(childClass))
                     }
                 }
-                false
-            }.forEach { method ->
-                literal = literal.then(getLiteral(method))
             }
-            return literal
+            return root
         } else {
             throw AnnotationParseException("No @CommandName!")
         }
@@ -104,8 +118,9 @@ class AnnotationManager(val manager: CommandManager) {
         mutableListOf(method.parameters).removeAt(0).forEach { parameter ->
             parameter.annotations.forEach { annotation ->
                 if (argumentMap.containsKey(annotation.annotationClass.java)) {
-                    val argument = argumentMap[annotation.annotationClass.java]!!.getConstructor(annotation.annotationClass.java)
-                        .newInstance(annotation)
+                    val argument =
+                        argumentMap[annotation.annotationClass.java]!!.getConstructor(annotation.annotationClass.java)
+                            .newInstance(annotation)
                     arguments[parameter.name] = argument
                 }
             }
@@ -114,30 +129,39 @@ class AnnotationManager(val manager: CommandManager) {
         if (name != null) {
             if (arguments.isNotEmpty()) {
                 var argumentBuilder: RequiredArgumentBuilder<CommandListenerWrapper, Any>? = null
-                arguments.forEach { (name, argument) ->
-                    argumentBuilder = if (argumentBuilder == null) {
-                        RequiredArgumentBuilder.argument(
-                            name,
+                for (i in arguments.entries.size - 1 downTo 0) {
+                    val argumentName = arguments.entries.toList()[i].key
+                    val argument = arguments.entries.toList()[i].value
+                    argumentBuilder=if(argumentBuilder==null){
+                        RequiredArgumentBuilder.argument<CommandListenerWrapper, Any>(
+                            argumentName,
                             argument.getBrigadierArgument() as ArgumentType<Any>
-                        )
+                        ).executes(getCommand(method, arguments, absoluteSender))
                     } else {
-                        argumentBuilder!!.then(
-                            RequiredArgumentBuilder.argument(
-                                name,
-                                argument.getBrigadierArgument() as ArgumentType<Any>
-                            )
-                        )
+                        RequiredArgumentBuilder.argument<CommandListenerWrapper, Any>(
+                            argumentName,
+                            argument.getBrigadierArgument() as ArgumentType<Any>
+                        ).then(argumentBuilder)
                     }
                 }
-                return LiteralArgumentBuilder.literal<CommandListenerWrapper>(name).then(argumentBuilder!!.executes(getCommand(method, arguments, absoluteSender)))
+                return LiteralArgumentBuilder.literal<CommandListenerWrapper>(name).then(argumentBuilder)
             } else {
-                return LiteralArgumentBuilder.literal<CommandListenerWrapper>(name).executes(getCommand(method, absoluteSender))
+                return LiteralArgumentBuilder.literal<CommandListenerWrapper>(name)
+                    .executes(getCommand(method, absoluteSender))
             }
         } else {
             throw AnnotationParseException("No @CommandName!")
         }
     }
 
+    /**
+     * Get command from a method
+     *
+     * @param method
+     * @param arguments argumentName,argument
+     * @param absoluteSender
+     * @return brigadier command
+     */
     private fun getCommand(
         method: Method,
         arguments: LinkedHashMap<String, Argument>,
@@ -157,11 +181,18 @@ class AnnotationManager(val manager: CommandManager) {
                 ) as Int
             } catch (e: Exception) {
                 e.printStackTrace()
-                return@Command 0
+                throw e
             }
         }
     }
 
+    /**
+     * Get command from a method
+     *
+     * @param method
+     * @param absoluteSender
+     * @return brigadier command
+     */
     private fun getCommand(method: Method, absoluteSender: Boolean): Command<CommandListenerWrapper> {
         return Command { context ->
             try {
@@ -173,7 +204,7 @@ class AnnotationManager(val manager: CommandManager) {
                 return@Command method.invoke(method.declaringClass.getConstructor().newInstance(), sender) as Int
             } catch (e: Exception) {
                 e.printStackTrace()
-                return@Command 0
+                throw e
             }
         }
     }

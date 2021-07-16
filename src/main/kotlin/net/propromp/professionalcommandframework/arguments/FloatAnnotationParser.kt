@@ -2,10 +2,10 @@ package net.propromp.professionalcommandframework.arguments
 
 import com.mojang.brigadier.arguments.ArgumentType
 import com.mojang.brigadier.arguments.FloatArgumentType
-import net.propromp.professionalcommandframework.api.arguments.Argument
+import net.propromp.professionalcommandframework.api.annotationparser.AnnotationParser
 import net.propromp.professionalcommandframework.api.arguments.FloatArgument
 
-class ArgumentFloat(private val annotation:FloatArgument): Argument() {
+class FloatAnnotationParser(private val annotation:FloatArgument): AnnotationParser() {
     override fun getBrigadierArgument(): ArgumentType<*> {
         return FloatArgumentType.floatArg(annotation.min,annotation.max)
     }

@@ -2,10 +2,10 @@ package net.propromp.professionalcommandframework.arguments
 
 import com.mojang.brigadier.arguments.ArgumentType
 import com.mojang.brigadier.arguments.LongArgumentType
-import net.propromp.professionalcommandframework.api.arguments.Argument
+import net.propromp.professionalcommandframework.api.annotationparser.AnnotationParser
 import net.propromp.professionalcommandframework.api.arguments.LongArgument
 
-class ArgumentLong(private val annotation:LongArgument) :Argument(){
+class LongAnnotationParser(private val annotation:LongArgument) : AnnotationParser(){
     override fun getBrigadierArgument(): ArgumentType<*> {
         return LongArgumentType.longArg(annotation.min,annotation.max)
     }

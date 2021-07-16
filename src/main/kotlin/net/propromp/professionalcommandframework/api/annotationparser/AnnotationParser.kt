@@ -1,16 +1,16 @@
-package net.propromp.professionalcommandframework.api.arguments
+package net.propromp.professionalcommandframework.api.annotationparser
 
 import com.mojang.brigadier.arguments.ArgumentType
 
 /**
  * Argument
- * ***You must implement a constructor with annotation parameter
+ * ***You must implement a constructor with annotation parameter***
  *
  * @constructor
  *
  * @param annotation arugument annotation
  */
-abstract class Argument {
+abstract class AnnotationParser {
     /**
      * Get brigadier argument type
      *

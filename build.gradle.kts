@@ -4,6 +4,7 @@ plugins {
     java
     kotlin("jvm") version "1.4.32"
     id("com.github.johnrengelman.shadow") version "5.2.0"
+    `maven-publish`
 }
 
 val pluginId: String by extra
@@ -13,22 +14,45 @@ val pluginPackage: String by extra
 val paperVersion: String by extra
 val serverDirectory: String by extra
 val serverEntry: String by extra
+val githubUsername: String = System.getenv("GITHUB_USERNAME")!!
+val githubPassword:String = System.getenv("GITHUB_PASSWORD")!!
+val githubToken:String = System.getenv("GITHUB_TOKEN")!!
 
 group = "${pluginPackage}.${pluginId}"
 version = pluginVersion
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/Propromp/ProfessionalCommandFramework")
+            credentials {
+                username = githubUsername
+                password = githubToken
+            }
+        }
+    }
+    publications {
+        register<MavenPublication>("gpr") {
+            artifactId="pcf"
+            from(components["java"])
+        }
+    }
+}
 
 repositories {
     mavenCentral()
     mavenLocal()
     maven("https://papermc.io/repo/repository/maven-public/")
     maven("https://kotlin.bintray.com/kotlinx/")
+    maven("https://libraries.minecraft.net")
 }
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "latest.release")
     compileOnly("com.destroystokyo.paper", "paper-api", paperVersion)
-    compileOnly(files("server/cache/patched_1.16.5.jar"))
+    compileOnly("com.mojang:brigadier:1.0.17")
 }
 
 tasks {

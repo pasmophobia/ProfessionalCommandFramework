@@ -1,0 +1,59 @@
+[12:42:26] [main/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[12:42:27] [main/INFO]: Reloading ResourceManager: Default, bukkit
+[12:42:27] [Worker-Main-5/INFO]: Loaded 7 recipes
+[12:42:28] [Server thread/INFO]: Starting minecraft server version 1.16.5
+[12:42:28] [Server thread/INFO]: Loading properties
+[12:42:28] [Server thread/INFO]: This server is running Paper version git-Paper-782 (MC: 1.16.5) (Implementing API version 1.16.5-R0.1-SNAPSHOT)
+[12:42:28] [Server thread/INFO]: Debug logging is disabled
+[12:42:28] [Server thread/INFO]: Using 4 threads for Netty based IO
+[12:42:28] [Server thread/INFO]: Server Ping Player Sample Count: 12
+[12:42:28] [Server thread/INFO]: Default game type: SURVIVAL
+[12:42:28] [Server thread/INFO]: Generating keypair
+[12:42:28] [Server thread/INFO]: Starting Minecraft server on *:25565
+[12:42:28] [Server thread/INFO]: Using default channel type
+[12:42:29] [Server thread/INFO]: [pcf-example] Loading pcf-example v1.16.5-R0.1-SNAPSHOT
+[12:42:29] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[12:42:29] [Server thread/INFO]: Preparing level "world"
+[12:42:29] [Server thread/WARN]: Unable to find spawn biome
+[12:42:29] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
+[12:42:29] [Server thread/INFO]: Preparing spawn area: 0%
+[12:42:29] [Server thread/INFO]: Time elapsed: 142 ms
+[12:42:29] [Server thread/INFO]: Preparing start region for dimension minecraft:the_nether
+[12:42:29] [Worker-Main-1/INFO]: Preparing spawn area: 0%
+[12:42:30] [Worker-Main-2/INFO]: Preparing spawn area: 0%
+[12:42:30] [Worker-Main-4/INFO]: Preparing spawn area: 0%
+[12:42:30] [Server thread/INFO]: Time elapsed: 1017 ms
+[12:42:30] [Server thread/INFO]: Preparing start region for dimension minecraft:the_end
+[12:42:31] [Worker-Main-5/INFO]: Preparing spawn area: 0%
+[12:42:31] [Worker-Main-3/INFO]: Preparing spawn area: 0%
+[12:42:31] [Server thread/INFO]: Time elapsed: 566 ms
+[12:42:31] [Server thread/INFO]: [pcf-example] Enabling pcf-example v1.16.5-R0.1-SNAPSHOT
+[12:42:31] [Server thread/INFO]: Running delayed init tasks
+[12:42:31] [Server thread/INFO]: Done (3.178s)! For help, type "help"
+[12:42:31] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] ************************************************************
+[12:42:31] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * WARNING - YOU ARE RUNNING AN OUTDATED VERSION OF JAVA.
+[12:42:31] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * PAPER WILL STOP BEING COMPATIBLE WITH THIS VERSION OF
+[12:42:31] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * JAVA WHEN MINECRAFT 1.17 IS RELEASED.
+[12:42:31] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] *
+[12:42:31] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * Please update the version of Java you use to run Paper
+[12:42:31] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * to at least Java 16. When Paper for Minecraft 1.17 is
+[12:42:31] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * released support for versions of Java before 16 will
+[12:42:31] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * be dropped.
+[12:42:31] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] *
+[12:42:31] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * Current Java version: 11.0.10
+[12:42:31] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] *
+[12:42:31] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * Check this forum post for more information: 
+[12:42:31] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] *   https://papermc.io/java16
+[12:42:31] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] ************************************************************
+[12:42:31] [Server thread/INFO]: Timings Reset
+[12:42:47] [User Authenticator #1/INFO]: UUID of player Propromp is acf67b86-9088-43a7-bfb6-0e9b63a7e20a
+[12:42:47] [Server thread/INFO]: Propromp joined the game
+[12:42:47] [Server thread/INFO]: Propromp[/127.0.0.1:58770] logged in with entity id 452 at ([world]-139.5, 69.0, 237.5)
+[12:42:51] [Server thread/INFO]: Propromp issued server command: /test
+[12:43:09] [Server thread/INFO]: Propromp issued server command: /test iamop
+[12:43:13] [Server thread/INFO]: That player does not exist
+[12:43:18] [Server thread/INFO]: Made Propromp a server operator
+[12:43:21] [Server thread/INFO]: Propromp issued server command: /test iamop
+[12:43:21] [Server thread/INFO]: [Propromp] I am OP!!
+[12:43:32] [Server thread/INFO]: Propromp issued server command: /test test 1 1
+[13:00:41] [Server thread/INFO]: Propromp was slain by Spider

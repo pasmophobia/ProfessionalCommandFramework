@@ -1,3 +1,7 @@
-/server/
+/Test/server/
 /build/
 /.gradle/
+/build/
+/example/server/
+/example/build/
+/api/build/

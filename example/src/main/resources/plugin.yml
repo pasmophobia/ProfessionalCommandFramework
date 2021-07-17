@@ -1,0 +1,4 @@
+name: pcf-example
+version: @version@
+main: net.propromp.pcf.example.PcfExample
+api-version: 1.16

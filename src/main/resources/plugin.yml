@@ -1,4 +1,0 @@
-name: ProfessionalCommandFramework
-version: @version@
-main: net.propromp.professionalcommandframework.ProfessionalCommandFramework
-api-version: 1.16

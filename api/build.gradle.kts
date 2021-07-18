@@ -1,7 +1,6 @@
 import de.undercouch.gradle.tasks.download.Download
 
 plugins {
-    id("maven")
     id("org.jetbrains.dokka") version "1.5.0"
 }
 

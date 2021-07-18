@@ -1,11 +1,13 @@
 plugins {
+    id("maven")
     kotlin("jvm") version "1.5.0" apply false
     id("com.github.johnrengelman.shadow") version "5.2.0" apply false
 }
-subprojects {
+allprojects {
     apply{
         plugin("org.jetbrains.kotlin.jvm")
         plugin("com.github.johnrengelman.shadow")
+        plugin("maven")
     }
     repositories {
         mavenCentral()

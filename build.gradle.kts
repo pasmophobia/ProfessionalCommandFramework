@@ -15,6 +15,7 @@ allprojects {
         maven("https://papermc.io/repo/repository/maven-public/")
         maven("https://kotlin.bintray.com/kotlinx/")
         maven("https://libraries.minecraft.net")
+        maven("https://jitpack.io")
     }
     val implementation by configurations
     val compileOnly by configurations

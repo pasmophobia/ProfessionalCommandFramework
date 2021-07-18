@@ -6,10 +6,8 @@ dependencies {
     implementation(project(":api"))
 }
 tasks {
-    withType<Jar> {
-        duplicatesStrategy=DuplicatesStrategy.INHERIT
-    }
     processResources {
+        this.duplicatesStrategy=DuplicatesStrategy.INHERIT
         filesMatching("*.yml") {
             expand(project.properties)
         }

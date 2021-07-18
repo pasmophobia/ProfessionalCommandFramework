@@ -6,6 +6,8 @@ allprojects {
     apply{
         plugin("org.jetbrains.kotlin.jvm")
         plugin("com.github.johnrengelman.shadow")
+        plugin("java")
+        plugin("maven-publish")
     }
     repositories {
         mavenCentral()

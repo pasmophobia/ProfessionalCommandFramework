@@ -6,6 +6,9 @@ dependencies {
     implementation(project(":api"))
 }
 tasks {
+    withType<Jar> {
+        duplicatesStrategy=DuplicatesStrategy.INHERIT
+    }
     processResources {
         filesMatching("*.yml") {
             expand(project.properties)

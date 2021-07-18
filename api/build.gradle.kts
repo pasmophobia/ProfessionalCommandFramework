@@ -1,7 +1,5 @@
-import de.undercouch.gradle.tasks.download.Download
-
 plugins {
-    id("org.jetbrains.dokka") version "1.5.0"
+    `maven`
 }
 
 group = "net.propromp"
@@ -28,12 +26,5 @@ tasks {
 
     shadowJar {
         archiveFileName.set("pcf-api-v$version.jar")
-    }
-    dokkaJavadoc {
-        outputDirectory.set(File("javadoc"))
-        this.dokkaSourceSets.register("src/main")
-    }
-    dokkaHtml {
-        outputDirectory.set(File("dokka"))
     }
 }

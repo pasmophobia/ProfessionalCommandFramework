@@ -1,10 +1,7 @@
 package net.propromp.pcf.example
 
 import net.kyori.adventure.text.Component
-import net.propromp.pcf.api.annotation.BukkitSender
-import net.propromp.pcf.api.annotation.CommandName
-import net.propromp.pcf.api.annotation.CommandPermission
-import net.propromp.pcf.api.annotation.Root
+import net.propromp.pcf.api.annotation.*
 import net.propromp.pcf.api.arguments.*
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
@@ -16,6 +13,7 @@ import org.bukkit.inventory.ItemStack
  * declares a command
  */
 @CommandName("test")
+@CommandAlias(["tes","ts"])
 class TestCommand {
     /**
      * /test
@@ -109,6 +107,7 @@ class TestCommand {
      * Subcommand
      */
     @CommandName("subcommand")
+    @CommandAlias(["sc"])
     class Subcommand {
         /**
          * /test subcommand
@@ -123,6 +122,7 @@ class TestCommand {
          * /test subcommand test <test>
          */
         @CommandName("test")
+        @CommandAlias(["ts"])
         fun test(sender: CommandSender, @IntegerArgument(0,5) test:Int): Int {
             sender.sendMessage(test.toString())
             return test

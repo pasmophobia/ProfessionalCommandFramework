@@ -19,4 +19,7 @@ class CommandManager(val plugin: Plugin){
         bukkitDispatcher = NMS("MinecraftServer").invokeMethod(console,"getCommandDispatcher")!!
         dispatcher = NMS.fromClass(bukkitDispatcher.javaClass).getField(bukkitDispatcher,"b") as CommandDispatcher<Any>
     }
+    fun register(command:PcfCommand){
+        dispatcher.register(command.getLiteralArgumentBuilder())
+    }
 }

@@ -1,34 +1,11 @@
 import de.undercouch.gradle.tasks.download.Download
 
 plugins {
-    `maven-publish`
+    id("org.jetbrains.dokka") version "1.5.0"
 }
 
-val name = "pcf-api"
-val githubUsername = System.getenv("GITHUB_USERNAME")
-val githubToken = System.getenv("GITHUB_TOKEN")
-group = "net.propromp.professionalcommandframework"
-version = "1.0"
-
-publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/Propromp/ProfessionalCommandFramework")
-            credentials {
-                username = githubUsername
-                password = githubToken
-            }
-        }
-    }
-    publications {
-        register<MavenPublication>("gpr") {
-            artifactId="pcf"
-            from(components["java"])
-        }
-    }
-}
-
+group = "net.propromp"
+version = "2.0"
 
 dependencies {
     compileOnly("com.mojang:brigadier:1.0.17")
@@ -52,6 +29,13 @@ tasks {
     }
 
     shadowJar {
-        archiveFileName.set("$name v$archiveVersion.jar")
+        archiveFileName.set("pcf-api-v$version.jar")
+    }
+    dokkaJavadoc {
+        outputDirectory.set(File("javadoc"))
+        this.dokkaSourceSets.register("src/main")
+    }
+    dokkaHtml {
+        outputDirectory.set(File("dokka"))
     }
 }

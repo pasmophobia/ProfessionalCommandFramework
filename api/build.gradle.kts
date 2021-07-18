@@ -1,7 +1,3 @@
-plugins {
-    `maven`
-}
-
 group = "net.propromp"
 version = "2.0"
 

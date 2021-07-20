@@ -10,6 +10,7 @@ class PcfExample : JavaPlugin() {
 	override fun onEnable() {
 		commandManager=CommandManager(this)
 		annotationManager= AnnotationManager(commandManager)
+		annotationManager.registerArgument(FoodArgument::class.java,FoodArgumentParser::class.java)
 		annotationManager.register(TestCommand::class.java)
 	}
 	override fun onDisable() {

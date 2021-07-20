@@ -3,11 +3,11 @@ package net.propromp.pcf.arguments
 import com.mojang.brigadier.arguments.ArgumentType
 import com.mojang.brigadier.context.CommandContext
 import net.propromp.pcf.nms.NMS
-import net.propromp.pcf.api.annotationparser.ConvertAnnotationParser
+import net.propromp.pcf.api.annotationparser.ConvertArgumentParser
 import net.propromp.pcf.api.arguments.EntityArgument
 import org.bukkit.entity.Player
 
-class EntityAnnotationParser(val annotation:EntityArgument) : ConvertAnnotationParser(){
+class EntityArgumentParser(val annotation:EntityArgument) : ConvertArgumentParser(){
     override val fromArgumentType: ArgumentType<*>
      get() {
 

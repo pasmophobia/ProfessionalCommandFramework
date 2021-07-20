@@ -1,18 +1,19 @@
 package net.propromp.pcf.api
 
-import com.mojang.brigadier.Command
 import com.mojang.brigadier.arguments.ArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.builder.RequiredArgumentBuilder
 import com.mojang.brigadier.context.CommandContext
 import net.propromp.pcf.api.annotation.*
-import net.propromp.pcf.api.annotationparser.AnnotationParser
-import net.propromp.pcf.api.annotationparser.ConvertAnnotationParser
+import net.propromp.pcf.api.annotationparser.ArgumentParser
+import net.propromp.pcf.api.annotationparser.ConvertArgumentParser
+import net.propromp.pcf.api.annotationparser.CustomArgumentParser
 import net.propromp.pcf.nms.NMS
 import org.bukkit.command.CommandSender
 import java.lang.reflect.Method
+import kotlin.Exception
 
-class PcfCommand(val name:String,val permission:String?, val arguments:LinkedHashMap<String, AnnotationParser>, val function: ((CommandContext<Any>)->Int)?,val children:List<PcfCommand>) {
+class PcfCommand(val name:String, val permission:String?, val arguments:LinkedHashMap<String, ArgumentParser>, val function: ((CommandContext<Any>)->Int)?, val children:List<PcfCommand>) {
     /**
      * Get literal argument builder
      *
@@ -25,7 +26,14 @@ class PcfCommand(val name:String,val permission:String?, val arguments:LinkedHas
             //with no arguments
             literal = when(function) {
                 null->literal
-                else->literal.executes{function.invoke(it)}
+                else->literal.executes{
+                    try {
+                        function.invoke(it)
+                    } catch(e:Exception){
+                        e.printStackTrace()
+                        throw e
+                    }
+                }
             }
         } else {
             //with arguments
@@ -41,7 +49,14 @@ class PcfCommand(val name:String,val permission:String?, val arguments:LinkedHas
                         ).apply {
                             when(function){
                                 null -> {}
-                                else -> executes{function.invoke(it)}
+                                else -> executes{
+                                    try {
+                                        function.invoke(it)
+                                    } catch(e:Exception){
+                                        e.printStackTrace()
+                                        throw e
+                                    }
+                                }
                             }
                         }
                     }
@@ -51,6 +66,9 @@ class PcfCommand(val name:String,val permission:String?, val arguments:LinkedHas
                             argument.getBrigadierArgument() as ArgumentType<Any>
                         ).then(argumentBuilder)
                     }
+                }
+                if(argument is CustomArgumentParser<*>){
+                    argumentBuilder = argumentBuilder.suggests(argument.suggestionProvider)
                 }
             }
             literal = literal.then(argumentBuilder)
@@ -92,7 +110,7 @@ class PcfCommand(val name:String,val permission:String?, val arguments:LinkedHas
                     }
                 }
             }
-            var arguments = linkedMapOf<String,AnnotationParser>()
+            var arguments = linkedMapOf<String,ArgumentParser>()
             var function:((CommandContext<Any>)->Int)? = null
             val children = mutableListOf<PcfCommand>()
             //read methods
@@ -157,13 +175,13 @@ class PcfCommand(val name:String,val permission:String?, val arguments:LinkedHas
             return PcfCommand(name,permission,arguments,function, mutableListOf())
         }
         @JvmStatic
-        internal fun getArguments(manager:AnnotationManager,method: Method):LinkedHashMap<String,AnnotationParser> {
-            val map = linkedMapOf<String, AnnotationParser>()
+        internal fun getArguments(manager:AnnotationManager,method: Method):LinkedHashMap<String,ArgumentParser> {
+            val map = linkedMapOf<String, ArgumentParser>()
             method.parameters.forEach { parameter ->
                 parameter.annotations.forEach { annotation ->
                     manager.argumentMap[annotation.annotationClass.java]?.let { parserClass ->
                         val parser = parserClass.getConstructor(annotation.annotationClass.java)
-                            .newInstance(annotation) as AnnotationParser
+                            .newInstance(annotation) as ArgumentParser
                         map[parameter.name] = parser
                     }
                 }
@@ -172,7 +190,7 @@ class PcfCommand(val name:String,val permission:String?, val arguments:LinkedHas
         }
 
         @JvmStatic
-        internal fun getFunction(arguments: Map<String,AnnotationParser>,method: Method,bukkitSender:Boolean):((CommandContext<Any>)->Int){
+        internal fun getFunction(arguments: Map<String,ArgumentParser>, method: Method, bukkitSender:Boolean):((CommandContext<Any>)->Int){
             val obj = method.declaringClass.getConstructor().newInstance()
             return fun (context:CommandContext<Any>):Int {
                 val sender = if(bukkitSender){
@@ -181,20 +199,23 @@ class PcfCommand(val name:String,val permission:String?, val arguments:LinkedHas
                     NMS("CommandListenerWrapper").invokeMethod(context.source,"getBukkitEntity")
                 }
                 return when(arguments.size){
-                    0 -> method.invoke(obj,sender)
+                    0 -> method.invoke(obj,sender) as Int
                     else -> {
                         val parsedArguments = mutableListOf<Any>()
                         arguments.forEach { (name,argument)->
                             parsedArguments.add(when(argument){
-                                is ConvertAnnotationParser -> {
+                                is ConvertArgumentParser -> {
+                                    argument.convert(context.getArgument(name,Any::class.java),context)
+                                }
+                                is CustomArgumentParser<*> -> {
                                     argument.convert(context.getArgument(name,Any::class.java),context)
                                 }
                                 else -> context.getArgument(name,Any::class.java)
                             })
                         }
-                        method.invoke(obj,sender,*parsedArguments.toTypedArray())
+                        method.invoke(obj,sender,*parsedArguments.toTypedArray()) as Int
                     }
-                } as Int
+                }
             }
         }
     }

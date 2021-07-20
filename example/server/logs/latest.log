@@ -1,77 +1,53 @@
-[12:50:12] [main/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
-[12:50:12] [main/INFO]: Reloading ResourceManager: Default, bukkit
-[12:50:13] [Worker-Main-5/INFO]: Loaded 7 recipes
-[12:50:13] [Server thread/INFO]: Starting minecraft server version 1.16.5
-[12:50:13] [Server thread/INFO]: Loading properties
-[12:50:13] [Server thread/INFO]: This server is running Paper version git-Paper-782 (MC: 1.16.5) (Implementing API version 1.16.5-R0.1-SNAPSHOT)
-[12:50:14] [Server thread/INFO]: Server Ping Player Sample Count: 12
-[12:50:14] [Server thread/INFO]: Using 4 threads for Netty based IO
-[12:50:14] [Server thread/INFO]: Debug logging is disabled
-[12:50:14] [Server thread/INFO]: Default game type: SURVIVAL
-[12:50:14] [Server thread/INFO]: Generating keypair
-[12:50:14] [Server thread/INFO]: Starting Minecraft server on *:25565
-[12:50:14] [Server thread/INFO]: Using default channel type
-[12:50:14] [Server thread/INFO]: [pcf-example] Loading pcf-example v1.16.5-R0.1-SNAPSHOT
-[12:50:14] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
-[12:50:14] [Server thread/INFO]: Preparing level "world"
-[12:50:14] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
-[12:50:15] [Server thread/INFO]: Preparing spawn area: 0%
-[12:50:15] [Server thread/INFO]: Time elapsed: 434 ms
-[12:50:15] [Server thread/INFO]: Preparing start region for dimension minecraft:the_nether
-[12:50:15] [Server thread/INFO]: Preparing spawn area: 0%
-[12:50:15] [Server thread/INFO]: Preparing spawn area: 0%
-[12:50:16] [Server thread/INFO]: Time elapsed: 823 ms
-[12:50:16] [Server thread/INFO]: Preparing start region for dimension minecraft:the_end
-[12:50:16] [Server thread/INFO]: Preparing spawn area: 0%
-[12:50:16] [Server thread/INFO]: Time elapsed: 402 ms
-[12:50:16] [Server thread/INFO]: [pcf-example] Enabling pcf-example v1.16.5-R0.1-SNAPSHOT
-[12:50:16] [Server thread/INFO]: Running delayed init tasks
-[12:50:16] [Server thread/INFO]: Done (2.760s)! For help, type "help"
-[12:50:16] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] ************************************************************
-[12:50:16] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * WARNING - YOU ARE RUNNING AN OUTDATED VERSION OF JAVA.
-[12:50:16] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * PAPER WILL STOP BEING COMPATIBLE WITH THIS VERSION OF
-[12:50:16] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * JAVA WHEN MINECRAFT 1.17 IS RELEASED.
-[12:50:16] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] *
-[12:50:16] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * Please update the version of Java you use to run Paper
-[12:50:16] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * to at least Java 16. When Paper for Minecraft 1.17 is
-[12:50:16] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * released support for versions of Java before 16 will
-[12:50:16] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * be dropped.
-[12:50:16] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] *
-[12:50:16] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * Current Java version: 11.0.10
-[12:50:16] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] *
-[12:50:16] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * Check this forum post for more information: 
-[12:50:16] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] *   https://papermc.io/java16
-[12:50:16] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] ************************************************************
-[12:50:16] [Server thread/INFO]: Timings Reset
-[12:50:18] [User Authenticator #1/INFO]: UUID of player Propromp is acf67b86-9088-43a7-bfb6-0e9b63a7e20a
-[12:50:18] [Server thread/INFO]: Propromp joined the game
-[12:50:18] [Server thread/INFO]: Propromp[/127.0.0.1:49328] logged in with entity id 223 at ([world]76.0964344152008, 67.0, 377.42369526387495)
-[12:50:21] [Server thread/INFO]: Propromp issued server command: /test subcommand test
-[12:50:23] [Server thread/INFO]: Propromp issued server command: /test subcommand test 1
-[12:50:26] [Server thread/INFO]: Propromp issued server command: /test subcommand ts 21
-[12:50:27] [Server thread/INFO]: Propromp issued server command: /test subcommand ts 5
-[12:50:32] [Server thread/INFO]: Propromp issued server command: /ts subcommand
-[12:56:58] [Server thread/INFO]: Propromp lost connection: Disconnected
-[12:56:58] [Server thread/INFO]: Propromp left the game
-[12:57:42] [User Authenticator #2/INFO]: UUID of player Propromp is acf67b86-9088-43a7-bfb6-0e9b63a7e20a
-[12:57:42] [Server thread/INFO]: Propromp joined the game
-[12:57:42] [Server thread/INFO]: Propromp[/127.0.0.1:59767] logged in with entity id 1435 at ([world]198.05198071007362, 84.0, 416.9281513165767)
-[12:58:01] [Server thread/INFO]: Propromp was blown up by Creeper
-[13:00:18] [Server thread/INFO]: Propromp was slain by Iron Golem
-[13:03:35] [Server thread/INFO]: Stopping server
-[13:03:35] [Server thread/INFO]: Saving players
-[13:03:35] [Server thread/INFO]: Propromp lost connection: Server closed
-[13:03:35] [Server thread/INFO]: Propromp left the game
-[13:03:35] [Server thread/INFO]: Saving worlds
-[13:03:35] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
-[13:03:36] [Server thread/INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
-[13:03:36] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
-[13:03:36] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
-[13:03:36] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_the_end]'/minecraft:the_end
-[13:03:36] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
-[13:03:36] [Server thread/INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
-[13:03:36] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
-[13:03:36] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
-[13:03:36] [Server thread/INFO]: Flushing Chunk IO
-[13:03:36] [Server thread/INFO]: Closing Thread Pool
-[13:03:36] [Server thread/INFO]: Closing Server
+[15:33:52] [main/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[15:33:52] [main/INFO]: Reloading ResourceManager: Default, bukkit
+[15:33:52] [Worker-Main-5/INFO]: Loaded 7 recipes
+[15:33:53] [Server thread/INFO]: Starting minecraft server version 1.16.5
+[15:33:53] [Server thread/INFO]: Loading properties
+[15:33:53] [Server thread/INFO]: This server is running Paper version git-Paper-782 (MC: 1.16.5) (Implementing API version 1.16.5-R0.1-SNAPSHOT)
+[15:33:53] [Server thread/INFO]: Debug logging is disabled
+[15:33:53] [Server thread/INFO]: Using 4 threads for Netty based IO
+[15:33:53] [Server thread/INFO]: Server Ping Player Sample Count: 12
+[15:33:53] [Server thread/INFO]: Default game type: SURVIVAL
+[15:33:53] [Server thread/INFO]: Generating keypair
+[15:33:53] [Server thread/INFO]: Starting Minecraft server on *:25565
+[15:33:54] [Server thread/INFO]: Using default channel type
+[15:33:54] [Server thread/INFO]: [pcf-example] Loading pcf-example v1.0
+[15:33:54] [Server thread/INFO]: Server permissions file permissions.yml is empty, ignoring it
+[15:33:54] [Server thread/INFO]: Preparing level "world"
+[15:33:54] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
+[15:33:54] [Server thread/INFO]: Preparing spawn area: 0%
+[15:33:55] [Server thread/INFO]: Time elapsed: 481 ms
+[15:33:55] [Server thread/INFO]: Preparing start region for dimension minecraft:the_nether
+[15:33:55] [Server thread/INFO]: Preparing spawn area: 0%
+[15:33:55] [Server thread/INFO]: Preparing spawn area: 20%
+[15:33:56] [Server thread/INFO]: Time elapsed: 943 ms
+[15:33:56] [Server thread/INFO]: Preparing start region for dimension minecraft:the_end
+[15:33:56] [Server thread/INFO]: Preparing spawn area: 0%
+[15:33:56] [Worker-Main-7/INFO]: Preparing spawn area: 100%
+[15:33:56] [Server thread/INFO]: Time elapsed: 502 ms
+[15:33:56] [Server thread/INFO]: [pcf-example] Enabling pcf-example v1.0
+[15:33:56] [Server thread/INFO]: Running delayed init tasks
+[15:33:56] [Server thread/INFO]: Done (3.088s)! For help, type "help"
+[15:33:56] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] ************************************************************
+[15:33:56] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * WARNING - YOU ARE RUNNING AN OUTDATED VERSION OF JAVA.
+[15:33:56] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * PAPER WILL STOP BEING COMPATIBLE WITH THIS VERSION OF
+[15:33:56] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * JAVA WHEN MINECRAFT 1.17 IS RELEASED.
+[15:33:56] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] *
+[15:33:56] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * Please update the version of Java you use to run Paper
+[15:33:56] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * to at least Java 16. When Paper for Minecraft 1.17 is
+[15:33:56] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * released support for versions of Java before 16 will
+[15:33:56] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * be dropped.
+[15:33:56] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] *
+[15:33:56] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * Current Java version: 11.0.10
+[15:33:56] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] *
+[15:33:56] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] * Check this forum post for more information: 
+[15:33:56] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] *   https://papermc.io/java16
+[15:33:56] [Server thread/WARN]: [io.papermc.paper.util.PaperJvmChecker] ************************************************************
+[15:33:56] [Server thread/INFO]: Timings Reset
+[15:34:20] [User Authenticator #1/INFO]: UUID of player Propromp is acf67b86-9088-43a7-bfb6-0e9b63a7e20a
+[15:34:20] [Server thread/INFO]: Propromp joined the game
+[15:34:20] [Server thread/INFO]: Propromp[/127.0.0.1:53237] logged in with entity id 239 at ([world]-64.6962224685434, 70.0, 211.1815493086589)
+[15:34:22] [Server thread/INFO]: Propromp issued server command: /test eat weaeto
+[15:34:22] [Server thread/WARN]: com.mojang.brigadier.exceptions.CommandSyntaxException: That's not food! at position 0: <--[HERE]
+[15:34:45] [Server thread/INFO]: Propromp issued server command: /test eat weaeawer
+[15:34:45] [Server thread/WARN]: com.mojang.brigadier.exceptions.CommandSyntaxException: That's not food! at position 0: <--[HERE]

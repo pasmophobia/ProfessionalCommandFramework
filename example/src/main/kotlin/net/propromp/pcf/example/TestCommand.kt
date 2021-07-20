@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component
 import net.propromp.pcf.api.annotation.*
 import net.propromp.pcf.api.arguments.*
 import org.bukkit.Bukkit
+import org.bukkit.Sound
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
@@ -100,6 +101,18 @@ class TestCommand {
     @CommandPermission("op")
     fun iAmOp(sender: CommandSender):Int{
         Bukkit.broadcast(Component.text("[${sender.name}] I am OP!!"))
+        return 1
+    }
+    /**
+     * /test eat <food>
+     * (This command uses [net.propromp.pcf.example.FoodArgumentParser].)
+     */
+    @CommandName("eat")
+    fun eat(sender: CommandSender,@FoodArgument food: Food):Int{
+        Bukkit.broadcast(Component.text("[${sender.name}] I ate $food!!"))
+        Bukkit.getOnlinePlayers().forEach {
+            it.playSound(it.location, Sound.ENTITY_PLAYER_BURP,1f,1f)
+        }
         return 1
     }
 

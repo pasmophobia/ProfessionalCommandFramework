@@ -9,7 +9,7 @@ import com.mojang.brigadier.context.CommandContext
  *
  * @constructor Create empty Convert argument
  */
-abstract class ConvertAnnotationParser(): AnnotationParser() {
+abstract class ConvertArgumentParser(): ArgumentParser() {
     abstract val fromArgumentType:ArgumentType<*>
     abstract fun convert(any:Any,commandContext: CommandContext<*>):Any
     /**

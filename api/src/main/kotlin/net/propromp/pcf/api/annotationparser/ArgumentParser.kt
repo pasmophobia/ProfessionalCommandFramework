@@ -10,7 +10,7 @@ import com.mojang.brigadier.arguments.ArgumentType
  *
  * @param annotation arugument annotation
  */
-abstract class AnnotationParser {
+abstract class ArgumentParser {
     /**
      * Get brigadier argument type
      *

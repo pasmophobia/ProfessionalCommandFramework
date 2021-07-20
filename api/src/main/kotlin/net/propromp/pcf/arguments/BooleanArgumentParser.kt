@@ -2,10 +2,10 @@ package net.propromp.pcf.arguments
 
 import com.mojang.brigadier.arguments.ArgumentType
 import com.mojang.brigadier.arguments.BoolArgumentType
-import net.propromp.pcf.api.annotationparser.AnnotationParser
+import net.propromp.pcf.api.annotationparser.ArgumentParser
 import net.propromp.pcf.api.arguments.BooleanArgument
 
-class BooleanAnnotationParser(private val annotation:BooleanArgument): AnnotationParser() {
+class BooleanArgumentParser(private val annotation:BooleanArgument): ArgumentParser() {
     override fun getBrigadierArgument(): ArgumentType<*> {
         return BoolArgumentType.bool()
     }

@@ -16,14 +16,14 @@ class NMS(val clazz: Class<*>) {
             return NMS(clazz)
         }
     }
-    fun invokeMethod(obj:Any,name:String,vararg params:Any):Any?{
+    fun invokeMethod(obj:Any?,name:String,vararg params:Any):Any?{
         val method = clazz.getDeclaredMethod(name,*params.map {
             it::class.javaPrimitiveType ?: it::class.java
         }.toTypedArray())
         method.isAccessible=true
         return method.invoke(obj,*params)
     }
-    fun getField(obj:Any,name: String):Any?{
+    fun getField(obj:Any?,name: String):Any?{
         val field = clazz.getDeclaredField(name)
         field.isAccessible=true
         return field.get(obj)

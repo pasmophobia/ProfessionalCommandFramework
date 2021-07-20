@@ -9,7 +9,7 @@ repositories {
   maven { url="jitpack.io }
 }
 dependencies {
-  implementation 'com.github.propromp:ProfessionalCommandFramework:2.0'
+  implementation 'com.github.propromp:ProfessionalCommandFramework:3.0'
 }
 compileJava.options.compilerArgs.add("-parameters")
 compileKotlin.kotlinOptions.javaParameters=true
@@ -23,7 +23,7 @@ repositories {
   maven("jitpack.io")
 }
 dependencies {
-  implementation("com.github.propromp:ProfessionalCommandFramework:2.0")
+  implementation("com.github.propromp:ProfessionalCommandFramework:3.0")
 }
 tasks {
   compileJava {

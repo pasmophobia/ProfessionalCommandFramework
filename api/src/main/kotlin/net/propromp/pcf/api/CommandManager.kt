@@ -3,9 +3,11 @@ package net.propromp.pcf.api
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.builder.RequiredArgumentBuilder
+import com.mojang.brigadier.tree.CommandNode
 import net.propromp.pcf.nms.NMS
 import org.apache.bcel.util.BCELifier
 import org.bukkit.Bukkit
+import org.bukkit.command.defaults.BukkitCommand
 import org.bukkit.plugin.Plugin
 
 /**
@@ -23,7 +25,10 @@ class CommandManager(val plugin: Plugin){
         dispatcher = NMS.fromClass(bukkitDispatcher.javaClass).getField(bukkitDispatcher,"b") as CommandDispatcher<Any>
     }
     fun register(command:PcfCommand){
-        dispatcher.register(command.getLiteralArgumentBuilder())
+        val node = dispatcher.register(command.getLiteralArgumentBuilder())
+        val bukkitCommand = NMS.getCraftBukkit("command.VanillaCommandWrapper").getConstructor(CommandDispatcher::class.java,CommandNode::class.java).newInstance(dispatcher,node) as BukkitCommand
+        bukkitCommand.permission=null
+        Bukkit.getCommandMap().register(plugin.name,bukkitCommand)
         LiteralArgumentBuilder.literal<Any>("a")
     }
 }

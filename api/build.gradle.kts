@@ -4,7 +4,6 @@ plugins {
     `maven-publish`
 }
 dependencies {
-    implementation("org.apache.bcel:bcel:6.5.0")
     compileOnly("com.mojang:brigadier:1.0.17")
 }
 publishing {

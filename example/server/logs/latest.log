@@ -51,3 +51,20 @@
 [15:34:22] [Server thread/WARN]: com.mojang.brigadier.exceptions.CommandSyntaxException: That's not food! at position 0: <--[HERE]
 [15:34:45] [Server thread/INFO]: Propromp issued server command: /test eat weaeawer
 [15:34:45] [Server thread/WARN]: com.mojang.brigadier.exceptions.CommandSyntaxException: That's not food! at position 0: <--[HERE]
+[15:39:20] [Server thread/INFO]: Stopping server
+[15:39:20] [Server thread/INFO]: Saving players
+[15:39:20] [Server thread/INFO]: Propromp lost connection: Server closed
+[15:39:20] [Server thread/INFO]: Propromp left the game
+[15:39:20] [Server thread/INFO]: Saving worlds
+[15:39:20] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+[15:39:21] [Server thread/INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[15:39:21] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+[15:39:21] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[15:39:21] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_the_end]'/minecraft:the_end
+[15:39:21] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[15:39:21] [Server thread/INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[15:39:21] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[15:39:21] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[15:39:21] [Server thread/INFO]: Flushing Chunk IO
+[15:39:21] [Server thread/INFO]: Closing Thread Pool
+[15:39:21] [Server thread/INFO]: Closing Server

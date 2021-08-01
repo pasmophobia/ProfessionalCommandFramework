@@ -5,7 +5,6 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.builder.RequiredArgumentBuilder
 import com.mojang.brigadier.tree.CommandNode
 import net.propromp.pcf.nms.NMS
-import org.apache.bcel.util.BCELifier
 import org.bukkit.Bukkit
 import org.bukkit.command.defaults.BukkitCommand
 import org.bukkit.plugin.Plugin

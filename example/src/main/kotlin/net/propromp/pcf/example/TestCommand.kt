@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component
 import net.propromp.pcf.api.annotation.*
 import net.propromp.pcf.api.arguments.*
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.Sound
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Entity
@@ -117,6 +118,19 @@ class TestCommand {
     }
 
     /**
+     * Teleport
+     *
+     * @param sender
+     * @param location
+     * @return
+     */
+    @CommandName("teleport")
+    fun teleport(sender: CommandSender,@LocationArgument location:Location):Int {
+        (sender as Player).teleport(location)
+        return 1
+    }
+
+    /**
      * Subcommand
      */
     @CommandName("subcommand")
@@ -136,9 +150,9 @@ class TestCommand {
          */
         @CommandName("test")
         @CommandAlias(["ts"])
-        fun test(sender: CommandSender, @IntegerArgument(0,5) test:Int): Int {
-            sender.sendMessage(test.toString())
-            return test
+        fun test(sender: CommandSender, @StringArgument(StringType.SINGLE_STRING) test:String): Int {
+            sender.sendMessage(test)
+            return 1
         }
     }
 }

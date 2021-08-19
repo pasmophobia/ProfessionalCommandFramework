@@ -34,7 +34,7 @@ abstract class CustomArgumentParser<T>: ConvertArgumentParser() {
      * @return brigadier argument type
      */
     override fun getBrigadierArgument(): ArgumentType<String> {
-        return StringArgumentType.string()
+        return StringArgumentType.word()
     }
 
     abstract override fun getType(): Class<T>

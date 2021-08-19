@@ -22,6 +22,7 @@ class AnnotationManager(val manager: CommandManager) {
         registerArgument(StringArgument::class.java,StringArgumentParser::class.java)
         registerArgument(EntityArgument::class.java,EntityArgumentParser::class.java)
         registerArgument(ItemStackArgument::class.java,ItemStackArgumentParser::class.java)
+        registerArgument(LocationArgument::class.java,LocationArgumentParser::class.java)
     }
 
     /**

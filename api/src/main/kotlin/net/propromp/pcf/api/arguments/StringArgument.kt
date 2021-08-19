@@ -7,7 +7,7 @@ package net.propromp.pcf.api.arguments
  * @property type
  * @constructor Create empty String argument
  */
-annotation class StringArgument(val type:StringArgumentType = StringArgumentType.SINGLE_WORD)
-enum class StringArgumentType {
-    SINGLE_WORD,GREEDY
+annotation class StringArgument(val type:StringType = StringType.SINGLE_WORD)
+enum class StringType {
+    SINGLE_WORD,GREEDY,SINGLE_STRING
 }

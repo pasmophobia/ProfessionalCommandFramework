@@ -30,6 +30,6 @@ tasks {
     }
 
     shadowJar {
-        archiveFileName.set("pcf-api-v$version.jar")
+        archiveFileName.set("pcf-api-$version.jar")
     }
 }

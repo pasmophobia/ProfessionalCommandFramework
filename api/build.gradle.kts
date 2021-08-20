@@ -1,5 +1,5 @@
 group = "net.propromp"
-version = "3.1.1"
+version = "v1.0"
 plugins {
     `maven-publish`
 }

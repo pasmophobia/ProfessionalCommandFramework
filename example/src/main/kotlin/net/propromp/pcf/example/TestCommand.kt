@@ -8,6 +8,7 @@ import org.bukkit.Location
 import org.bukkit.Sound
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Entity
+import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
@@ -100,7 +101,8 @@ class TestCommand {
      */
     @CommandName("iamop")
     @CommandPermission("op")
-    fun iAmOp(sender: CommandSender):Int{
+    @SenderType(EntityType.PLAYER)
+    fun iAmOp(sender: Player):Int{
         Bukkit.broadcast(Component.text("[${sender.name}] I am OP!!"))
         return 1
     }
@@ -109,7 +111,7 @@ class TestCommand {
      * (This command uses [net.propromp.pcf.example.FoodArgumentParser].)
      */
     @CommandName("eat")
-    fun eat(sender: CommandSender,@FoodArgument food: Food):Int{
+    fun eat(sender: Player,@FoodArgument food: Food):Int{
         Bukkit.broadcast(Component.text("[${sender.name}] I ate $food!!"))
         Bukkit.getOnlinePlayers().forEach {
             it.playSound(it.location, Sound.ENTITY_PLAYER_BURP,1f,1f)

@@ -21,8 +21,8 @@ class TestCommand {
     /**
      * /test
      *
-     * @param sender command sender will be substituted
-     * @return return value of Brigadier command(you can use either [net.propromp.pcf.ProfessionalCommandFramework.FAILURE] or [net.propromp.pcf.ProfessionalCommandFramework.SUCCESS])
+     * @param sender command sender will be assined
+     * @return Brigadier return value
      */
     @Root
     fun root(sender: CommandSender): Int {
@@ -33,15 +33,14 @@ class TestCommand {
     /**
      * /test foo
      * @BukkitSender means that when `/execute as <entity> run <command>` is executed,
-     * the executor of `/execute as <entity> run <command>` will be substituted to the sender parameter.
+     * the executor of `/execute as <entity> run <command>` will be assigned to sender.
      * @param sender
-     * @return
+     * The return value can be omitted.
      */
     @CommandName("foo")
     @BukkitSender
     fun foo(sender: CommandSender): Int {
         sender.sendMessage("a")
-        return 1
     }
 
     /**
@@ -102,35 +101,21 @@ class TestCommand {
     @CommandName("iamop")
     @CommandPermission("op")
     @SenderType(EntityType.PLAYER)
-    fun iAmOp(sender: Player):Int{
+    fun iAmOp(sender: Player){
         Bukkit.broadcast(Component.text("[${sender.name}] I am OP!!"))
-        return 1
     }
     /**
      * /test eat <food>
      * (This command uses [net.propromp.pcf.example.FoodArgumentParser].)
      */
     @CommandName("eat")
-    fun eat(sender: Player,@FoodArgument food: Food):Int{
+    fun eat(sender: Player,@FoodArgument food: Food){
         Bukkit.broadcast(Component.text("[${sender.name}] I ate $food!!"))
         Bukkit.getOnlinePlayers().forEach {
             it.playSound(it.location, Sound.ENTITY_PLAYER_BURP,1f,1f)
         }
-        return 1
     }
 
-    /**
-     * Teleport
-     *
-     * @param sender
-     * @param location
-     * @return
-     */
-    @CommandName("teleport")
-    fun teleport(sender: CommandSender,@LocationArgument location:Location):Int {
-        (sender as Player).teleport(location)
-        return 1
-    }
 
     /**
      * Subcommand
@@ -142,7 +127,7 @@ class TestCommand {
          * /test subcommand
          */
         @Root
-        fun root(sender: CommandSender): Int {
+        fun root(sender: CommandSender) {
             sender.sendMessage("/test subcommand!!")
             return 1
         }
@@ -152,9 +137,8 @@ class TestCommand {
          */
         @CommandName("test")
         @CommandAlias(["ts"])
-        fun test(sender: CommandSender, @StringArgument(StringType.SINGLE_STRING) test:String): Int {
+        fun test(sender: CommandSender, @StringArgument(StringType.SINGLE_STRING) test:String) {
             sender.sendMessage(test)
-            return 1
         }
     }
 }

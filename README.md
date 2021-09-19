@@ -5,7 +5,7 @@ plugins {
   id 'com.github.johnrengelman.shadow' version '6.0.0'
 }
 repositories {
-  maven { url="jitpack.io }
+  maven { url="jitpack.io" }
 }
 dependencies {
   implementation 'com.github.propromp:ProfessionalCommandFramework:(latest-version)'
@@ -19,7 +19,7 @@ plugins {
   id 'com.github.johnrengelman.shadow' version '6.0.0'
 }
 repositories {
-  maven { url="jitpack.io }
+  maven { url="jitpack.io" }
 }
 dependencies {
   implementation 'com.github.propromp:ProfessionalCommandFramework:(latest-version)'

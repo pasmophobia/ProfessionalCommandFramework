@@ -13,3 +13,7 @@ tasks {
         kotlinOptions.javaParameters = true
     }
 }
+task<Copy>("buildToServerDirectory") {
+    from(tasks.shadowJar)
+    destinationDir=File("server/plugins")
+}

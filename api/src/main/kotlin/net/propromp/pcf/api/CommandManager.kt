@@ -15,18 +15,20 @@ import org.bukkit.plugin.Plugin
  * @constructor Create empty Command manager
  */
 class CommandManager(val plugin: Plugin){
-    private val brigadierDispatcher:CommandDispatcher<Any>
-    private val minecraftDispatcher:Any
+    internal val brigadierDispatcher:CommandDispatcher<Any>
+    internal val minecraftDispatcher:Any
+    val helpManager = HelpManager(this)
+    val annotationManager = AnnotationManager(this)
+    val commands = mutableListOf<PcfCommand>()
     init {
         val console = NMS.fromClass(Bukkit.getServer().javaClass).getField(Bukkit.getServer(),"console")!!
         minecraftDispatcher = NMS("MinecraftServer").invokeMethod(console,"getCommandDispatcher")!!
         brigadierDispatcher = NMS.fromClass(minecraftDispatcher.javaClass).getField(minecraftDispatcher,"b") as CommandDispatcher<Any>
     }
+    fun registerBrigadier(builder:LiteralArgumentBuilder<Any>):CommandNode<Any> {
+        return brigadierDispatcher.register(builder)
+    }
     fun register(command:PcfCommand){
-        val node = brigadierDispatcher.register(command.getLiteralArgumentBuilder())
-        val bukkitCommand = NMS.getCraftBukkit("command.VanillaCommandWrapper").getConstructor(NMS.getNMS("CommandDispatcher"),CommandNode::class.java).newInstance(minecraftDispatcher,node) as BukkitCommand
-        bukkitCommand.permission=null
-        Bukkit.getCommandMap().register(plugin.name,bukkitCommand)
-        LiteralArgumentBuilder.literal<Any>("a")
+        command.register(this)
     }
 }

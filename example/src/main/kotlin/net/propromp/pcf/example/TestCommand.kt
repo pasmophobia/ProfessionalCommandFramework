@@ -17,12 +17,15 @@ import org.bukkit.inventory.ItemStack
  */
 @CommandName("test")
 @CommandAlias(["tes","ts"])
+@AutoHelp
+@CommandUsage("/test help")
+@CommandDescription("A test command.")
 class TestCommand {
     /**
      * /test
      *
-     * @param sender command sender will be substituted
-     * @return return value of Brigadier command(you can use either [net.propromp.pcf.ProfessionalCommandFramework.FAILURE] or [net.propromp.pcf.ProfessionalCommandFramework.SUCCESS])
+     * @param sender command sender
+     * @return return value commonly used by Vanilla commands(you can use either [net.propromp.pcf.ProfessionalCommandFramework.FAILURE] or [net.propromp.pcf.ProfessionalCommandFramework.SUCCESS])
      */
     @Root
     fun root(sender: CommandSender): Int {
@@ -32,8 +35,7 @@ class TestCommand {
 
     /**
      * /test foo
-     * @BukkitSender means that when `/execute as <entity> run <command>` is executed,
-     * the executor of `/execute as <entity> run <command>` will be substituted to the sender parameter.
+     * @BukkitSender:Sender will be a sender of the command when you execute (/execute as ...) command
      * @param sender
      * @return
      */
@@ -46,6 +48,7 @@ class TestCommand {
 
     /**
      * /test test <test> <test2>
+     * You can add arguments by adding Argument annotation to the parameter.
      *
      * @param sender
      * @param test
@@ -53,6 +56,7 @@ class TestCommand {
      * @return
      */
     @CommandName("test")
+    @CommandDescription("foo!")
     fun testFoo(sender: CommandSender, @IntegerArgument(0, 5) test: Int, @IntegerArgument(0, 5) test2: Int): Int {
         sender.sendMessage("$test*$test2=${test+test2}")
         return test+test2
@@ -60,12 +64,14 @@ class TestCommand {
 
     /**
      * /test tptome <entity>
+     * There are various types of argument.
      *
      * @param sender
      * @param entity
      * @return
      */
     @CommandName("tptome")
+    @CommandDescription("teleport entities to your location.")
     fun tp(sender: CommandSender,@EntityArgument(EntityArgumentType.MANY_ENTITIES) entity:List<Entity>):Int{
         if(sender is Entity) {
             entity.forEach {
@@ -76,25 +82,7 @@ class TestCommand {
     }
 
     /**
-     * /test give <itemStack> <amount>
-     *
-     * @param sender
-     * @param itemStack
-     * @param amount
-     * @return
-     */
-    @CommandName("give")
-    fun give(sender: CommandSender,@ItemStackArgument itemStack:ItemStack,@IntegerArgument(min = 0) amount:Int):Int{
-        if(sender is Player){
-            sender.inventory.addItem(itemStack.also{it.amount=amount})
-            return 1
-        }
-        return 0
-    }
-
-    /**
-     * /test iamop
-     * If you are not an op,the command will be not displayed in suggestion
+     * You can check sender's permissions.
      *
      * @param sender
      * @return
@@ -102,15 +90,22 @@ class TestCommand {
     @CommandName("iamop")
     @CommandPermission("op")
     @SenderType(EntityType.PLAYER)
+    @CommandDescription("Are you an op?")
     fun iAmOp(sender: Player):Int{
         Bukkit.broadcast(Component.text("[${sender.name}] I am OP!!"))
         return 1
     }
+
     /**
-     * /test eat <food>
-     * (This command uses [net.propromp.pcf.example.FoodArgumentParser].)
+     * You can also add a custom argument type.
+     * look at [net.propromp.pcf.example.FoodArgument]
+     *
+     * @param sender
+     * @param food
+     * @return
      */
     @CommandName("eat")
+    @CommandDescription("eat a food.")
     fun eat(sender: Player,@FoodArgument food: Food):Int{
         Bukkit.broadcast(Component.text("[${sender.name}] I ate $food!!"))
         Bukkit.getOnlinePlayers().forEach {
@@ -119,17 +114,17 @@ class TestCommand {
         return 1
     }
 
+    var count = 0
     /**
-     * Teleport
+     * You can also use variables!
      *
      * @param sender
-     * @param location
-     * @return
      */
-    @CommandName("teleport")
-    fun teleport(sender: CommandSender,@LocationArgument location:Location):Int {
-        (sender as Player).teleport(location)
-        return 1
+    @CommandName("count")
+    @CommandDescription("count")
+    fun count(sender: CommandSender) {
+        count++
+        sender.sendMessage(count.toString())
     }
 
     /**
@@ -137,6 +132,7 @@ class TestCommand {
      */
     @CommandName("subcommand")
     @CommandAlias(["sc"])
+    @CommandDescription("sub command!")
     class Subcommand {
         /**
          * /test subcommand
@@ -152,6 +148,7 @@ class TestCommand {
          */
         @CommandName("test")
         @CommandAlias(["ts"])
+        @CommandDescription("sub test.")
         fun test(sender: CommandSender, @StringArgument(StringType.SINGLE_STRING) test:String): Int {
             sender.sendMessage(test)
             return 1

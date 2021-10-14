@@ -4,32 +4,38 @@ import com.mojang.brigadier.arguments.ArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.builder.RequiredArgumentBuilder
 import com.mojang.brigadier.context.CommandContext
-import com.mojang.brigadier.exceptions.CommandSyntaxException
+import com.mojang.brigadier.tree.CommandNode
 import net.propromp.pcf.api.annotation.*
 import net.propromp.pcf.api.annotationparser.ArgumentParser
 import net.propromp.pcf.api.annotationparser.ConvertArgumentParser
 import net.propromp.pcf.api.annotationparser.CustomArgumentParser
 import net.propromp.pcf.nms.NMS
+import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
+import org.bukkit.command.defaults.BukkitCommand
 import org.bukkit.entity.EntityType
 import java.lang.reflect.Method
-import kotlin.Exception
 
 class PcfCommand(
     val name: String,
     val permission: String?,
+    val usage: String?,
+    val description: String?,
     val senderType: EntityType?,
     val bukkitSender: Boolean,
     val arguments: LinkedHashMap<String, ArgumentParser>,
     val function: ((CommandContext<Any>) -> Int)?,
-    val children: List<PcfCommand>
+    val classInstance: Any?,
+    val children: List<PcfCommand>,
+    val aliases: List<PcfCommand>?,
+    val autoHelp: Boolean
 ) {
     /**
      * Get literal argument builder
      *
      * @return LiteralArgumentBuilder<Any>
      */
-    fun getLiteralArgumentBuilder(): LiteralArgumentBuilder<Any> {
+    fun getLiteralArgumentBuilder(commandManager: CommandManager): LiteralArgumentBuilder<Any> {
         var literal = LiteralArgumentBuilder.literal<Any>(name)
         //executing
         if (arguments.isEmpty()) {
@@ -44,7 +50,7 @@ class PcfCommand(
                         } else {
                             NMS("CommandListenerWrapper").invokeMethod(it.source, "getBukkitEntity")
                         } as CommandSender
-                        if(senderType.entityClass?.isInstance(sender)==false) {
+                        if (senderType.entityClass?.isInstance(sender) == false) {
                             return@executes 0
                         }
                     }
@@ -96,15 +102,55 @@ class PcfCommand(
             literal = literal.then(argumentBuilder)
         }
         //permission
-        literal=when(permission){
-            null->literal
-            else->literal.requires { (NMS("CommandListenerWrapper").invokeMethod(it,"getBukkitSender") as CommandSender).hasPermission(permission) }
+        literal = when (permission) {
+            null -> literal
+            else -> literal.requires {
+                (NMS("CommandListenerWrapper").invokeMethod(
+                    it,
+                    "getBukkitSender"
+                ) as CommandSender).hasPermission(permission)
+            }
         }
+        //help
+        literal = literal.then(commandManager.helpManager.getLiteral(this))
         //children
         children.forEach {
-            literal = literal.then(it.getLiteralArgumentBuilder())
+            literal = literal.then(it.getLiteralArgumentBuilder(commandManager))
         }
         return literal
+    }
+
+    fun getAliasesLiteralBuilder(
+        commandManager: CommandManager,
+        node: CommandNode<Any>
+    ): List<LiteralArgumentBuilder<Any>> {
+        val literals = mutableListOf<LiteralArgumentBuilder<Any>>()
+        aliases?.forEach {
+            var literal = LiteralArgumentBuilder.literal<Any>(it.name)
+            literal = literal.redirect(node)
+            literals.add(literal)
+        }
+        return literals
+    }
+
+    fun register(commandManager: CommandManager) {
+        val node = commandManager.registerBrigadier(getLiteralArgumentBuilder(commandManager))
+        getAliasesLiteralBuilder(commandManager, node).forEach {
+            commandManager.registerBrigadier(it)
+        }
+        val bukkitCommand = NMS.getCraftBukkit("command.VanillaCommandWrapper")
+            .getConstructor(NMS.getNMS("CommandDispatcher"), CommandNode::class.java)
+            .newInstance(commandManager.minecraftDispatcher, node) as BukkitCommand
+        bukkitCommand.permission = null
+        if (usage != null) {
+            bukkitCommand.usage = usage
+        }
+        if (description != null) {
+            bukkitCommand.description = description
+        }
+        bukkitCommand.aliases = aliases?.map { it.name } ?: listOf()
+        Bukkit.getCommandMap().register(commandManager.plugin.name, bukkitCommand)
+        commandManager.commands.add(this)
     }
 
     companion object {
@@ -116,19 +162,25 @@ class PcfCommand(
          * @return
          */
         @JvmStatic
-        fun fromClass(manager: AnnotationManager, clazz: Class<*>): List<PcfCommand> {
+        fun fromClass(manager: AnnotationManager, instance: Any): PcfCommand {
+            val commandManager = manager.manager
+            val clazz = instance::class.java
             //read class's annotation
-            val commandNames = mutableListOf<String>()
+            var name = ""
+            val aliases = mutableListOf<String>()
             var permission: String? = null
-            var rootSenderType:EntityType? = null
+            var rootSenderType: EntityType? = null
             var rootBukkitSender = false
+            var rootDescription:String? = null
+            var rootUsage:String? = null
+            var autoHelp = false
             clazz.annotations.forEach {
                 when (it) {
                     is CommandAlias -> {
-                        commandNames.addAll(it.name)
+                        aliases.addAll(it.name)
                     }
                     is CommandName -> {
-                        commandNames.add(it.name)
+                        name = it.name
                     }
                     is CommandPermission -> {
                         permission = it.permission
@@ -138,6 +190,15 @@ class PcfCommand(
                     }
                     is BukkitSender -> {
                         rootBukkitSender = true
+                    }
+                    is CommandUsage -> {
+                        rootUsage = it.usage
+                    }
+                    is CommandDescription -> {
+                        rootDescription = it.description
+                    }
+                    is AutoHelp -> {
+                        autoHelp = true
                     }
                 }
             }
@@ -151,6 +212,8 @@ class PcfCommand(
                 var senderType = rootSenderType
                 val subCommandNames = mutableListOf<String>()
                 var subCommandPermission: String? = null
+                var usage:String? = null
+                var description:String? = null
                 method.annotations.forEach {
                     when (it) {
                         is BukkitSender -> {
@@ -171,26 +234,70 @@ class PcfCommand(
                         is Root -> {
                             isRoot = true
                         }
+                        is CommandUsage -> {
+                            usage = it.usage
+                        }
+                        is CommandDescription -> {
+                            description = it.description
+                        }
                     }
                 }
                 if (isRoot) {
                     arguments = getArguments(manager, method)
-                    function = getFunction(arguments, method, bukkitSender)
+                    function = getFunction(instance, arguments, method, bukkitSender)
                 } else {
                     subCommandNames.forEach { name ->
-                        children.add(fromMethod(manager, method, name, subCommandPermission,senderType, bukkitSender))
+                        children.add(
+                            fromMethod(
+                                instance,
+                                manager,
+                                method,
+                                name,
+                                subCommandPermission,
+                                usage,
+                                description,
+                                senderType,
+                                bukkitSender
+                            )
+                        )
                     }
                 }
             }
             clazz.classes.forEach {
-                children.addAll(fromClass(manager, it))
+                children.add(fromClass(manager, it.getConstructor().newInstance()))
             }
             //construct
             val list = mutableListOf<PcfCommand>()
-            commandNames.forEach { name ->
-                list.add(PcfCommand(name, permission,rootSenderType,rootBukkitSender, arguments, function, children))
+            aliases.forEach { it ->
+                list.add(
+                    PcfCommand(
+                        it,
+                        permission,
+                        rootUsage,
+                        rootDescription,
+                        rootSenderType,
+                        rootBukkitSender,
+                        arguments,
+                        function,
+                        instance,
+                        children, null, false
+                    )
+                )
             }
-            return list
+            return PcfCommand(
+                name,
+                permission,
+                rootUsage,
+                rootDescription,
+                rootSenderType,
+                rootBukkitSender,
+                arguments,
+                function,
+                instance,
+                children,
+                list,
+                autoHelp
+            )
         }
 
         /**
@@ -205,16 +312,31 @@ class PcfCommand(
          */
         @JvmStatic
         fun fromMethod(
+            instance: Any?,
             manager: AnnotationManager,
             method: Method,
             name: String,
             permission: String?,
-            senderType:EntityType?,
+            usage: String?,
+            description: String?,
+            senderType: EntityType?,
             bukkitSender: Boolean
         ): PcfCommand {
             val arguments = getArguments(manager, method)
-            val function = getFunction(arguments, method, bukkitSender)
-            return PcfCommand(name, permission,senderType,bukkitSender, arguments, function, mutableListOf())
+            val function = getFunction(instance, arguments, method, bukkitSender)
+            return PcfCommand(
+                name,
+                permission,
+                usage,
+                description,
+                senderType,
+                bukkitSender,
+                arguments,
+                function,
+                instance,
+                mutableListOf(),
+                null, false
+            )
         }
 
         @JvmStatic
@@ -234,11 +356,12 @@ class PcfCommand(
 
         @JvmStatic
         internal fun getFunction(
+            instance: Any?,
             arguments: Map<String, ArgumentParser>,
             method: Method,
             bukkitSender: Boolean
         ): ((CommandContext<Any>) -> Int) {
-            val obj = method.declaringClass.getConstructor().newInstance()
+            val obj = instance ?: method.declaringClass.getConstructor().newInstance()
             return fun(context: CommandContext<Any>): Int {
                 val sender = if (bukkitSender) {
                     NMS("CommandListenerWrapper").invokeMethod(context.source, "getBukkitSender")
@@ -265,7 +388,7 @@ class PcfCommand(
                         method.invoke(obj, sender, *parsedArguments.toTypedArray())
                     }
                 }
-                return if(res is Int){
+                return if (res is Int) {
                     res
                 } else {
                     1

@@ -38,11 +38,9 @@ class AnnotationManager(val manager: CommandManager) {
     /**
      * Register a command
      *
-     * @param root class
+     * @param root root command instance
      */
-    fun register(root: Class<*>) {
-        PcfCommand.fromClass(this,root).forEach {
-            manager.register(it)
-        }
+    fun register(root: Any) {
+        manager.register(PcfCommand.fromClass(this,root))
     }
 }

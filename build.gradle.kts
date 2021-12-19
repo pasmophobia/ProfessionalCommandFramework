@@ -13,7 +13,6 @@ allprojects {
         mavenCentral()
         mavenLocal()
         maven("https://papermc.io/repo/repository/maven-public/")
-        maven("https://kotlin.bintray.com/kotlinx/")
         maven("https://libraries.minecraft.net")
         maven("https://jitpack.io")
     }
@@ -21,7 +20,6 @@ allprojects {
     val compileOnly by configurations
     dependencies {
         implementation(kotlin("stdlib-jdk8"))
-        implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-core", "latest.release")
         compileOnly("com.destroystokyo.paper", "paper-api", "1.16.5-R0.1-SNAPSHOT")
     }
 }

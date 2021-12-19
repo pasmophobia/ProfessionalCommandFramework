@@ -112,7 +112,9 @@ class PcfCommand(
             }
         }
         //help
-        literal = literal.then(commandManager.helpManager.getLiteral(this))
+        if(autoHelp) {
+            literal = literal.then(commandManager.helpManager.getLiteral(this))
+        }
         //children
         children.forEach {
             literal = literal.then(it.getLiteralArgumentBuilder(commandManager))

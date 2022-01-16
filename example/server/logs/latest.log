@@ -52,3 +52,20 @@
 [09:54:36] [Server thread/INFO]: Propromp issued server command: /test help
 [09:55:11] [Server thread/INFO]: Propromp issued server command: /test help
 [09:55:21] [Server thread/INFO]: Propromp issued server command: /help test
+[10:03:13] [Server thread/INFO]: Stopping server
+[10:03:13] [Server thread/INFO]: Saving players
+[10:03:13] [Server thread/INFO]: Propromp lost connection: Server closed
+[10:03:13] [Server thread/INFO]: Propromp left the game
+[10:03:13] [Server thread/INFO]: Saving worlds
+[10:03:13] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+[10:03:13] [Server thread/INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[10:03:13] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_nether]'/minecraft:the_nether
+[10:03:14] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[10:03:14] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world_the_end]'/minecraft:the_end
+[10:03:14] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[10:03:14] [Server thread/INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[10:03:14] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[10:03:14] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[10:03:14] [Server thread/INFO]: Flushing Chunk IO
+[10:03:14] [Server thread/INFO]: Closing Thread Pool
+[10:03:14] [Server thread/INFO]: Closing Server

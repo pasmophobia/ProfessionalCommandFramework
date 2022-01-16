@@ -266,7 +266,9 @@ class PcfCommand(
                 }
             }
             clazz.classes.forEach {
-                children.add(fromClass(manager, it.getConstructor().newInstance()))
+                try {
+                    children.add(fromClass(manager, it.getConstructor().newInstance()))
+                } catch(_:Exception) {}
             }
             //construct
             val list = mutableListOf<PcfCommand>()
